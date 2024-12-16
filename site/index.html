@@ -1,96 +1,51 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
-    <title>PDF Topish va Ko‘rsatish</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        form {
-            margin-bottom: 20px;
-        }
-
-        input[type="text"] {
-            padding: 8px;
-            font-size: 1rem;
-            width: 200px;
-        }
-
-        button {
-            padding: 8px 15px;
-            font-size: 1rem;
-            margin-left: 10px;
-        }
-
-        .message {
-            margin: 10px 0;
-            color: red;
-        }
-
-        iframe {
-            width: 100%;
-            height: 80vh;
-            border: 1px solid #ccc;
-        }
-    </style>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ZIP dan PDF topish</title>
 </head>
 <body>
-    <h1>PDF Faylni ZIP ichidan izlash</h1>
     <form id="pdfForm">
-        <input type="text" id="pdfId" placeholder="ID kiriting, masalan 123" required>
+        <input type="text" id="pdfId" placeholder="ID kiriting" required>
         <button type="submit">Topish</button>
     </form>
-    <div class="message" id="message"></div>
-    <iframe id="pdfFrame" style="display:none;"></iframe>
+    <div id="message"></div>
+    <iframe id="pdfFrame" style="display:none; width:100%; height:80vh;"></iframe>
 
-    <!-- JSZip kutubxonasini CDN orqali ulaymiz -->
     <script src="https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js"></script>
     <script>
         const form = document.getElementById('pdfForm');
-        const pdfIdInput = document.getElementById('pdfId');
         const messageDiv = document.getElementById('message');
         const pdfFrame = document.getElementById('pdfFrame');
-
-        // Google Drive direct download link
-        const zipUrl = 'https://drive.google.com/uc?export=download&id=1mhwHxhgOS3Rwct_xsHUfPIOU9pHlHvnV';
-        
-        let zipLoaded = null; // ZIP ma'lumotlarini xotirada saqlaymiz, takroran yuklamaslik uchun
+        let zipLoaded = null;
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const pdfId = pdfIdInput.value.trim();
+            const pdfId = document.getElementById('pdfId').value.trim();
             if(!pdfId) return;
 
-            messageDiv.textContent = "Iltimos kuting, zip yuklanmoqda...";
+            messageDiv.textContent = "Iltimos kuting, ZIP yuklanmoqda...";
             pdfFrame.style.display = 'none';
 
             try {
                 if(!zipLoaded) {
-                    // zip hali yuklanmagan bo'lsa, fetch qilamiz
-                    const response = await fetch(zipUrl);
-                    if(!response.ok) {
-                        throw new Error("ZIP fayl yuklanmadi");
-                    }
+                    const response = await fetch('/main.zip');
+                    if(!response.ok) throw new Error("main.zip yuklanmadi");
+                    
                     const arrayBuffer = await response.arrayBuffer();
-
                     const jszip = new JSZip();
                     zipLoaded = await jszip.loadAsync(arrayBuffer);
                 }
 
                 const fileName = `${pdfId}.pdf`;
                 const pdfFile = zipLoaded.file(fileName);
-
                 if(!pdfFile) {
                     messageDiv.textContent = `Fayl topilmadi: ${fileName}`;
                     return;
                 }
 
                 messageDiv.textContent = "PDF yuklanmoqda...";
-
                 const pdfBlob = await pdfFile.async('blob');
                 const pdfUrl = URL.createObjectURL(pdfBlob);
 
