@@ -1,14 +1,13 @@
 const express = require('express');
 const path = require('path');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Bu bir xil papkada joylashgan fayllarga to'g'ridan-to'g'ri xizmat qiladi
+// main.zip va PDF lar bir joyda bo'lsa, pdfni to'g'ridan-to'g'ri express.static bilan xizmat qilish mumkin.
 app.use(express.static(path.join(__dirname)));
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+app.get('/document', (req, res) => {
+    res.sendFile(path.join(__dirname, 'document.pdf'));
 });
 
 app.listen(PORT, () => {
