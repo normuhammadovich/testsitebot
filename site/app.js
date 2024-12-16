@@ -4,7 +4,7 @@ const https = require('https');
 
 // Telegram parametrlari
 const BOT_TOKEN = '5383108241:AAE2-qeT-26Fnej_mvfnCQ92N-j_pFNevr8'; // Bot tokeningizni shu yerga yozing
-const WEB_APP_URL = 'https://sarbontestbot.netlify.net/index.html'; // Web ilovangizning HTTPS linkini yozing (ngrok yoki real domen)
+const WEB_APP_URL = 'https://bot-web-app.onrender.com/index.html'; // Web ilovangizning HTTPS linkini yozing (ngrok yoki real domen)
 let USER_CHAT_ID = 5379945359; // /start kelganda bu o'zgaruvchiga saqlaymiz
 
 const server = http.createServer((req, res) => {
