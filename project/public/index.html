@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <section>
+        <h2>Statistika</h2>
+        <div id="statsInfo"></div>
+        <button id="refreshStats">Yangilash</button>
+    </section>
+
+    <section>
+        <h2>Adminlar</h2>
+        <ul id="adminList"></ul>
+        <input type="number" id="newAdminId" placeholder="Admin ID">
+        <input type="text" id="newAdminName" placeholder="Admin nomi">
+        <button id="addAdminBtn">Admin qo'shish</button>
+    </section>
+
+    <section>
+        <h2>Kanallar</h2>
+        <ul id="channelList"></ul>
+        <input type="number" id="newChannelId" placeholder="Channel ID">
+        <input type="text" id="newChannelName" placeholder="Channel nomi">
+        <input type="text" id="newChannelLink" placeholder="Channel link">
+        <button id="addChannelBtn">Kanal qo'shish</button>
+    </section>
+
+    <section>
+        <h2>Xabar yuborish</h2>
+        <textarea id="broadcastText" placeholder="Xabar matni"></textarea>
+        <button id="sendBroadcastBtn">Yuborish</button>
+    </section>
+
+    <section>
+        <h2>Fayl Yuklash (Google Drive link)</h2>
+        <input type="text" id="fileLink" placeholder="Google Drive link">
+        <button id="uploadFileBtn">Yuklash</button>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
